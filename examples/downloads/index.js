@@ -4,14 +4,15 @@
  * Module dependencies.
  */
 
-var express = require('../../');
-var path = require('path');
+var express = require('../../'); // var express = require('../../index.js)
+var path = require('path'); // Require path node.js module
 
-var app = module.exports = express();
+var app = module.exports = express(); // sets the app, and module.esports variables to express
 
 // path to where the files are stored on disk
-var FILES_DIR = path.join(__dirname, 'files')
+var FILES_DIR = path.join(__dirname, 'files') // uses global variable __dirname and a list of strings to join a path to file
 
+// Attaches a GET route to the base url and returns an HTML page with a list of files
 app.get('/', function(req, res){
   res.send('<ul>' +
     '<li>Download <a href="/files/notes/groceries.txt">notes/groceries.txt</a>.</li>' +
@@ -23,6 +24,8 @@ app.get('/', function(req, res){
 
 // /files/* is accessed via req.params[0]
 // but here we name it :file
+
+// Returns a file at the given endpoint if the file exists
 app.get('/files/:file(*)', function(req, res, next){
   res.download(req.params.file, { root: FILES_DIR }, function (err) {
     if (!err) return; // file sent
@@ -33,6 +36,7 @@ app.get('/files/:file(*)', function(req, res, next){
   });
 });
 
+//
 /* istanbul ignore next */
 if (!module.parent) {
   app.listen(3000);
